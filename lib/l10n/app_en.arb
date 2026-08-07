@@ -1,0 +1,23 @@
+{
+    
+  "Sticker1": "Right crop, right time.",
+  "Sticker2": "Irrigate at the right time."
+  
+  "stageInitial": "Germination stage",
+  "stageDevelopment": "Development stage",
+  "stageMid": "Flowering stage",
+  "stageLate": "Maturity stage",
+
+  "headlineIrrigate": "Irrigate today",
+  "headlineNoIrrigate": "Do not irrigate today",
+
+  "subEnoughWater": "The soil has sufficient moisture.",
+  "subLightIrrigation": "Apply light irrigation frequently.",
+  "subLessIrrigation": "Apply less irrigation.",
+  "subMoreIrrigation": "Apply more irrigation.",
+
+  "reasonEnoughWater": "The soil moisture is sufficient. Irrigation is not needed today.",
+  "reasonNoRain": "There has been very little rainfall, so the soil moisture has reduced.",
+  "reasonLowRain": "Rainfall has been low and the crop requires more water."
+
+}
