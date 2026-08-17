@@ -6,6 +6,7 @@ class WeatherDayModel {
   final int precipitationProbability;
   final double windSpeed;
   final double et0;
+  final int weatherCode;
 
   WeatherDayModel({
     required this.date,
@@ -15,5 +16,6 @@ class WeatherDayModel {
     required this.precipitationProbability,
     required this.windSpeed,
     required this.et0,
+    required this.weatherCode,
   });
 }

@@ -1,9 +1,10 @@
-import 'package:fasalguru/ui/Widgets/Custom_form_field.dart';
-import 'package:fasalguru/ui/Widgets/Custom_password_firld.dart';
-import 'package:fasalguru/ui/Widgets/Custom_Big_Button.dart';
+import 'package:fasalguru/l10n/app_localizations.dart';
+import 'package:fasalguru/main.dart';
+import 'package:fasalguru/navigation/routes.dart';
+import 'package:fasalguru/viewModel/AuthenticationViewModel/authViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,7 +20,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool obscurePassword = true;
   bool isChecked = false;
-  bool isLoading = false;
 
   @override
   void dispose() {
@@ -28,14 +28,22 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void login(String email, String password) {
+  Future<void> _handleLogin(AuthViewModel authVM) async {
     if (!_formKey.currentState!.validate()) return;
 
-    setState(() => isLoading = true);
+    final l10n = AppLocalizations.of(context)!;
+    final result = await authVM.login(email.text.trim(), password.text.trim());
 
-  
+    if (!mounted) return;
 
-    setState(() => isLoading = false);
+    if (result != null) {
+      startupState.setLoggedIn(true);
+      context.go(Approutes.home);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(authVM.error ?? l10n.loginFailed)),
+      );
+    }
   }
 
   @override
@@ -43,6 +51,8 @@ class _LoginScreenState extends State<LoginScreen> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final size = MediaQuery.of(context).size;
+    final authVM = context.watch<AuthViewModel>();
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
@@ -55,16 +65,26 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 20),
+
                 Center(
-                  child: Image.asset(
-                    "assets/images/AppLogo.png",
-                    width: 160,
-                    height: 160,
+                  child: Container(
+                    width: 96,
+                    height: 96,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: colorScheme.secondary.withOpacity(0.15),
+                    ),
+                    child: Icon(
+                      Icons.agriculture_rounded,
+                      size: 44,
+                      color: colorScheme.primary,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 24),
+
                 Text(
-                  "Welcome Back",
+                  l10n.welcomeBack,
                   textAlign: TextAlign.center,
                   style: theme.textTheme.headlineSmall?.copyWith(
                     color: colorScheme.onSurface,
@@ -72,77 +92,80 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  "Login to your account",
+                  l10n.loginToAccount,
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodyMedium?.copyWith(
-                    color: colorScheme.onSurface
+                    color: colorScheme.onSurface,
                   ),
                 ),
                 const SizedBox(height: 32),
+
                 Form(
                   key: _formKey,
                   child: Column(
                     children: [
-                      CustomFormField(
+                      TextFormField(
                         controller: email,
-                        hintText: "Email",
-                        prefixicon: Image.asset(
-                          "assets/images/email.png",
-                          height: 17,
-                          width: 18,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          hintText: l10n.email,
+                          prefixIcon: Icon(
+                            Icons.mail_outline,
+                            color: colorScheme.primary,
+                          ),
                         ),
-                        color: colorScheme.surface,
-                        obscuretext: false,
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
-                            return "Please enter your email";
+                            return l10n.pleaseEnterEmail;
                           }
                           if (!RegExp(
                             r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
                           ).hasMatch(value.trim())) {
-                            return "Please enter a valid email";
+                            return l10n.pleaseEnterValidEmail;
                           }
                           return null;
                         },
                       ),
                       const SizedBox(height: 18),
-                      CustomPasswordField(
+
+                      TextFormField(
                         controller: password,
-                        hintText: "Password",
-                        prefixicon: Image.asset(
-                          "assets/images/lock.png",
-                          width: 17,
-                          height: 17,
+                        obscureText: obscurePassword,
+                        decoration: InputDecoration(
+                          hintText: l10n.password,
+                          prefixIcon: Icon(
+                            Icons.lock_outline,
+                            color: colorScheme.primary,
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                obscurePassword = !obscurePassword;
+                              });
+                            },
+                            icon: Icon(
+                              obscurePassword
+                                  ? Icons.visibility_off_outlined
+                                  : Icons.visibility_outlined,
+                              size: 20,
+                              color: colorScheme.onSurface.withOpacity(0.5),
+                            ),
+                          ),
                         ),
-                        color: colorScheme.surface,
-                        obscuretext: obscurePassword,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Password is empty";
+                            return l10n.passwordEmpty;
                           } else if (value.length < 6) {
-                            return "Password too weak";
+                            return l10n.passwordTooWeak;
                           }
                           return null;
                         },
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              obscurePassword = !obscurePassword;
-                            });
-                          },
-                          icon: Icon(
-                            obscurePassword
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            size: 20,
-                            color: colorScheme.onSurface
-                          ),
-                        ),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 6),
+
                 Row(
                   children: [
                     Checkbox(
@@ -155,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                     Text(
-                      "Remember me",
+                      l10n.rememberMe,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: colorScheme.onSurface,
                       ),
@@ -163,11 +186,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     const Spacer(),
                     TextButton(
                       onPressed: () {
-                        context.push('/forget');
-                        // context.push(Approutes.forget);
+                        context.push(Approutes.forgotPassword);
                       },
                       child: Text(
-                        "Forgot password?",
+                        l10n.forgotPassword,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: colorScheme.primary,
                           fontWeight: FontWeight.w600,
@@ -177,36 +199,44 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
                 const SizedBox(height: 24),
-                isLoading
+
+                authVM.isLoading
                     ? Center(
                         child: CircularProgressIndicator(
                           color: colorScheme.primary,
                         ),
                       )
-                    : CustomButton(
-                        text: "Log in",
-                        primaryColor: colorScheme.primary,
-                        pressed: () {
-                          login(email.text, password.text);
-                        },
+                    : SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          // style comes from global elevatedButtonTheme
+                          onPressed: () => _handleLogin(authVM),
+                          child: Text(
+                            l10n.login,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
                       ),
                 const SizedBox(height: 20),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don't have an account? ",
+                      l10n.dontHaveAccount,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: colorScheme.onSurface,
                       ),
                     ),
                     TextButton(
                       onPressed: () {
-                        context.push('/signup');
-                        // context.push(Approutes.signup);
+                        context.push(Approutes.signup);
                       },
                       child: Text(
-                        "Sign Up",
+                        l10n.signUp,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: colorScheme.primary,
                           fontWeight: FontWeight.w700,

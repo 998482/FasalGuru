@@ -11,43 +11,38 @@ class WeatherResponseModel {
   });
 
   factory WeatherResponseModel.fromJson(Map<String, dynamic> json) {
-
-    final current =
-        CurrentWeatherModel.fromJson(json["current"]);
+    final current = CurrentWeatherModel.fromJson(json["current"]);
 
     final dailyJson = json["daily"];
 
     List<WeatherDayModel> weatherList = [];
 
     for (int i = 0; i < dailyJson["time"].length; i++) {
-
       weatherList.add(
-
         WeatherDayModel(
-
           date: dailyJson["time"][i],
 
-          tempMax:
-          (dailyJson["temperature_2m_max"][i] ?? 0).toDouble(),
+          tempMax: (dailyJson["temperature_2m_max"][i] ?? 0).toDouble(),
 
-          tempMin:
-          (dailyJson["temperature_2m_min"][i] ?? 0).toDouble(),
+          tempMin: (dailyJson["temperature_2m_min"][i] ?? 0).toDouble(),
 
-          rain:
-          (dailyJson["rain_sum"][i] ?? 0).toDouble(),
+          rain: (dailyJson["rain_sum"][i] ?? 0).toDouble(),
 
           precipitationProbability:
-          dailyJson["precipitation_probability_max"][i] ?? 0,
+              dailyJson["precipitation_probability_max"][i] ?? 0,
 
-          windSpeed:
-          (dailyJson["wind_speed_10m_max"][i] ?? 0).toDouble(),
+          windSpeed: (dailyJson["wind_speed_10m_max"][i] ?? 0).toDouble(),
 
-          et0:
-          (dailyJson["et0_fao_evapotranspiration"][i] ?? 0).toDouble(),
+          et0: (dailyJson["et0_fao_evapotranspiration"][i] ?? 0).toDouble(),
+
+          // NEW: was completely missing before — this is why every
+          // day showed the same sun icon (WeatherDayModel had no
+          // weatherCode field at all to read from).
+          weatherCode: dailyJson["weather_code"] != null
+              ? (dailyJson["weather_code"][i] ?? 0) as int
+              : 0,
         ),
-
       );
-
     }
 
     return WeatherResponseModel(

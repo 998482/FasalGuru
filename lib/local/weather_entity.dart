@@ -21,6 +21,8 @@ class WeatherEntity {
 
   final double et0;
 
+  final int weatherCode;
+
   final String syncedAt;
 
   WeatherEntity({
@@ -33,6 +35,7 @@ class WeatherEntity {
     required this.precipitationProbability,
     required this.windSpeed,
     required this.et0,
+    required this.weatherCode,
     required this.syncedAt,
   });
 }

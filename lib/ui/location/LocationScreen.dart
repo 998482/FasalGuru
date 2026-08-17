@@ -1,3 +1,5 @@
+import 'package:fasalguru/l10n/app_localizations.dart';
+import 'package:fasalguru/local/location/location_prefs.dart';
 import 'package:fasalguru/navigation/routes.dart';
 import 'package:fasalguru/ui/Widgets/Custom_Button.dart';
 import 'package:fasalguru/viewModel/LocationViewModel/LocationViewModel.dart';
@@ -17,6 +19,8 @@ class _locationScreenState extends State<locationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
 
       body: Padding(padding: EdgeInsets.all(40),child:
@@ -33,21 +37,21 @@ class _locationScreenState extends State<locationScreen> {
           ),
           
           Text(
-            "Allow Location Access",
+            l10n.allowLocationAccess,
             style: Theme.of(context).textTheme.headlineLarge?.copyWith(
               fontSize: 30,
               color: Theme.of(context).colorScheme.primary,
             ),
           ),
           Text(
-            "We need your location for accurate ",
+            l10n.locationAccuracyReasonLine1,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
               fontSize: 18,
               color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           Text(
-            "weather & irrigation advice",
+            l10n.locationAccuracyReasonLine2,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
               fontSize: 18,
               color: Theme.of(context).colorScheme.secondary,
@@ -77,12 +81,12 @@ class _locationScreenState extends State<locationScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            "Latitude : ${vm.location!.latitude}",
+            l10n.latitudeLabel(vm.location!.latitude.toString()),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: 10),
           Text(
-            "Longitude : ${vm.location!.longitude}",
+            l10n.longitudeLabel(vm.location!.longitude.toString()),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
         ],
@@ -90,7 +94,7 @@ class _locationScreenState extends State<locationScreen> {
     }
 
     // Initial State
-    return const Text("Location not fetched");
+    return Text(l10n.locationNotFetched);
   },
 )
         ],
@@ -101,28 +105,40 @@ class _locationScreenState extends State<locationScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TextButton(
-              onPressed: () {
-                context.push(Approutes.login);
-              },
-              child: Text(
-                "Skip",
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                ),
+           TextButton(
+            onPressed: () {
+              context.push(Approutes.district);
+            },
+            child: Text(
+              l10n.skip,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
               ),
             ),
-            Custom_Button(
-              height: 60,
-              width: 120,
-              text: "Next",
-              color: Theme.of(context).colorScheme.primary,
-              onPressed: () {
-                context.read<LocationViewModel>().fetchLocation();
-              },
-            ),
+          ),
+           Custom_Button(
+  height: 60,
+  width: 120,
+  text: l10n.next,
+  color: Theme.of(context).colorScheme.primary,
+  onPressed: () async {
+    final locationVM = context.read<LocationViewModel>();
+    await locationVM.fetchLocation();
+
+    // Agar location mil gayi, coordinates save karo
+    if (locationVM.location != null) {
+      await LocationPrefs.saveCoordinates(
+        locationVM.location!.latitude,
+        locationVM.location!.longitude,
+      );
+    }
+
+    if (!context.mounted) return;
+    context.push(Approutes.district);
+  },
+),
           ],
         ),
       ),

@@ -1,8 +1,7 @@
+import 'package:fasalguru/l10n/app_localizations.dart';
 import 'package:fasalguru/viewModel/HomeRecommdation/recommendation_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-
 
 class RecommendationButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -15,6 +14,7 @@ class RecommendationButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Consumer<RecommendationViewModel>(
       builder: (context, vm, child) {
@@ -48,7 +48,7 @@ class RecommendationButton extends StatelessWidget {
                         const Icon(Icons.auto_awesome),
                         const SizedBox(width: 10),
                         Text(
-                          "Get Recommendation",
+                          l10n.getRecommendation,
                           style: theme.textTheme.titleMedium?.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

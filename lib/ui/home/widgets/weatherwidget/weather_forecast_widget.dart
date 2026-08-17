@@ -1,15 +1,17 @@
+import 'package:fasalguru/l10n/app_localizations.dart';
 import 'package:fasalguru/viewModel/weather/weather_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'weather_day_card.dart';
+import 'weather_icon_helper.dart';
 
 class WeatherForecastWidget extends StatelessWidget {
   const WeatherForecastWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Consumer<WeatherViewModel>(
       builder: (context, vm, child) {
@@ -23,10 +25,10 @@ class WeatherForecastWidget extends StatelessWidget {
         }
 
         if (vm.weatherList.isEmpty) {
-          return const SizedBox(
+          return SizedBox(
             height: 145,
             child: Center(
-              child: Text("Weather not available"),
+              child: Text(l10n.weatherNotAvailable),
             ),
           );
         }
@@ -41,14 +43,17 @@ class WeatherForecastWidget extends StatelessWidget {
 
               return WeatherDayCard(
                 day: index == 0
-                    ? "Today"
-                    : _getDayName(weather.date),
+                    ? l10n.today
+                    : _getDayName(l10n, weather.date),
 
-                temperature:
-                    "${weather.tempMax.round()}°",
+                temperature: "${weather.tempMax.round()}°",
 
-                // Filhal fixed icon
-                icon: Icons.wb_sunny,
+                // BUG FIX: was hardcoded to Icons.wb_sunny before —
+                // now actually maps the WMO weather code to the right icon.
+                // ⚠️ Agar tumhare weather model mein is field ka naam
+                // "weatherCode" nahi hai (e.g. "code" ya "wmoCode" hai),
+                // to sirf niche wali line change karo.
+              icon: WeatherIconHelper.getIcon(weather.weatherCode),
 
                 isSelected: index == 0,
               );
@@ -59,17 +64,17 @@ class WeatherForecastWidget extends StatelessWidget {
     );
   }
 
-  String _getDayName(String date) {
+  String _getDayName(AppLocalizations l10n, String date) {
     final d = DateTime.parse(date);
 
-    const days = [
-      "Mon",
-      "Tue",
-      "Wed",
-      "Thu",
-      "Fri",
-      "Sat",
-      "Sun",
+    final days = [
+      l10n.mon,
+      l10n.tue,
+      l10n.wed,
+      l10n.thu,
+      l10n.fri,
+      l10n.sat,
+      l10n.sun,
     ];
 
     return days[d.weekday - 1];

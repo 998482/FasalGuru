@@ -1,31 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:weather_icons/weather_icons.dart';
 
 class WeatherIconHelper {
   static IconData getIcon(int code) {
-    if (code == 0) return WeatherIcons.day_sunny;
-
-    if (code >= 1 && code <= 3) {
-      return WeatherIcons.cloud;
+    // Clear sky
+    if (code == 0) {
+      return Icons.wb_sunny;
     }
 
+    // Mainly clear, partly cloudy, overcast
+    if (code >= 1 && code <= 3) {
+      return Icons.cloud;
+    }
+
+    // Fog
+    if (code == 45 || code == 48) {
+      return Icons.foggy;
+    }
+
+    // Drizzle + rain
     if ((code >= 51 && code <= 67) ||
         (code >= 80 && code <= 82)) {
-      return WeatherIcons.rain;
+      return Icons.water_drop;
     }
 
-    if (code >= 71 && code <= 86) {
-      return WeatherIcons.snow;
+    // Snow
+    if (code >= 71 && code <= 77) {
+      return Icons.ac_unit;
     }
 
-    if (code == 45 || code == 48) {
-      return WeatherIcons.fog;
+    // Snow showers
+    if (code >= 85 && code <= 86) {
+      return Icons.ac_unit;
     }
 
-    if (code == 95 || code == 96 || code == 99) {
-      return WeatherIcons.thunderstorm;
+    // Thunderstorm
+    if (code >= 95 && code <= 99) {
+      return Icons.thunderstorm;
     }
 
-    return WeatherIcons.na;
+    // Unknown weather code
+    return Icons.help_outline;
   }
 }

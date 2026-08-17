@@ -1,3 +1,4 @@
+import 'package:fasalguru/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'soil_card_widget.dart';
 
@@ -16,13 +17,10 @@ class SoilSelectionWidget extends StatefulWidget {
   });
 
   @override
-  State<SoilSelectionWidget> createState() =>
-      _SoilSelectionWidgetState();
+  State<SoilSelectionWidget> createState() => _SoilSelectionWidgetState();
 }
 
-class _SoilSelectionWidgetState
-    extends State<SoilSelectionWidget> {
-
+class _SoilSelectionWidgetState extends State<SoilSelectionWidget> {
   SoilType selected = SoilType.normal;
 
   @override
@@ -46,12 +44,13 @@ class _SoilSelectionWidgetState
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "How is your field soil?",
+          l10n.howIsYourFieldSoil,
           style: theme.textTheme.titleLarge,
         ),
 
@@ -61,8 +60,8 @@ class _SoilSelectionWidgetState
           children: [
             Expanded(
               child: SoilCardWidget(
-                title: "Dry",
-                subtitle: "Needs irrigation",
+                title: l10n.dry,
+                subtitle: l10n.needsIrrigation,
                 icon: Icons.wb_sunny,
                 isSelected: selected == SoilType.dry,
                 onTap: () => selectSoil(SoilType.dry),
@@ -73,8 +72,8 @@ class _SoilSelectionWidgetState
 
             Expanded(
               child: SoilCardWidget(
-                title: "Normal",
-                subtitle: "Balanced",
+                title: l10n.normal,
+                subtitle: l10n.balanced,
                 icon: Icons.grass,
                 isSelected: selected == SoilType.normal,
                 onTap: () => selectSoil(SoilType.normal),
@@ -85,8 +84,8 @@ class _SoilSelectionWidgetState
 
             Expanded(
               child: SoilCardWidget(
-                title: "Wet",
-                subtitle: "High moisture",
+                title: l10n.wet,
+                subtitle: l10n.highMoisture,
                 icon: Icons.water_drop,
                 isSelected: selected == SoilType.wet,
                 onTap: () => selectSoil(SoilType.wet),

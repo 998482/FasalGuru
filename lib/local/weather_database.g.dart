@@ -98,7 +98,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `weather` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `date` TEXT NOT NULL, `tempMax` REAL NOT NULL, `tempMin` REAL NOT NULL, `rain` REAL NOT NULL, `precipitation` REAL NOT NULL, `precipitationProbability` INTEGER NOT NULL, `windSpeed` REAL NOT NULL, `et0` REAL NOT NULL, `syncedAt` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `weather` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `date` TEXT NOT NULL, `tempMax` REAL NOT NULL, `tempMin` REAL NOT NULL, `rain` REAL NOT NULL, `precipitation` REAL NOT NULL, `precipitationProbability` INTEGER NOT NULL, `windSpeed` REAL NOT NULL, `et0` REAL NOT NULL, `weatherCode` INTEGER NOT NULL, `syncedAt` TEXT NOT NULL)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `current_weather` (`id` INTEGER NOT NULL, `temperature` REAL NOT NULL, `humidity` INTEGER NOT NULL, `rain` REAL NOT NULL, `weatherCode` INTEGER NOT NULL, `windSpeed` REAL NOT NULL, `updatedAt` TEXT NOT NULL, PRIMARY KEY (`id`))');
         await database.execute(
@@ -139,6 +139,7 @@ class _$WeatherDao extends WeatherDao {
                   'precipitationProbability': item.precipitationProbability,
                   'windSpeed': item.windSpeed,
                   'et0': item.et0,
+                  'weatherCode': item.weatherCode,
                   'syncedAt': item.syncedAt
                 }),
         _currentWeatherEntityInsertionAdapter = InsertionAdapter(
@@ -178,6 +179,7 @@ class _$WeatherDao extends WeatherDao {
             precipitationProbability: row['precipitationProbability'] as int,
             windSpeed: row['windSpeed'] as double,
             et0: row['et0'] as double,
+            weatherCode: row['weatherCode'] as int,
             syncedAt: row['syncedAt'] as String));
   }
 
@@ -217,6 +219,7 @@ class _$WeatherDao extends WeatherDao {
             precipitationProbability: row['precipitationProbability'] as int,
             windSpeed: row['windSpeed'] as double,
             et0: row['et0'] as double,
+            weatherCode: row['weatherCode'] as int,
             syncedAt: row['syncedAt'] as String));
   }
 

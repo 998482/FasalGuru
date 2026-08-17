@@ -1,8 +1,9 @@
 // viewModel/irrigation/irrigation_viewmodel.dart
 
+import 'package:fasalguru/model/irrigationmodel/irrigation_result_model.dart';
+import 'package:fasalguru/repository/irrigation/irrigation_repository.dart';
 import 'package:flutter/foundation.dart';
-import '../../repository/irrigation/irrigation_repository.dart';
-import '../../model/irrigationmodel/irrigation_result_model.dart';
+
 
 class IrrigationViewModel extends ChangeNotifier {
   final IrrigationRepository repository;

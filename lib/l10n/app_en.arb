@@ -1,23 +1,492 @@
 {
-    
-  "Sticker1": "Right crop, right time.",
-  "Sticker2": "Irrigate at the right time."
+  "@@locale": "en",
+
+  "selectCropSoilDate": "Please select crop, soil and sowing date",
+  "@selectCropSoilDate": {
+    "description": "Message shown when crop, soil, or sowing date has not been selected"
+  },
+
+  "namaste": "Namaste",
+  "@namaste": {
+    "description": "Greeting shown to the user on the home screen"
+  },
+
+  "user": "User",
+  "@user": {
+    "description": "Fallback username shown when profile username is unavailable"
+  },
+
+  "sowingDate": "Sowing Date",
+  "@sowingDate": {
+    "description": "Label for the crop sowing date section"
+  },
+
+  "selectSowingDate": "Select Sowing Date",
+  "@selectSowingDate": {
+    "description": "Placeholder shown before a sowing date is selected"
+  },
+
+  "selectCrop": "Select Crop",
+  "@selectCrop": {
+    "description": "Title shown when selecting a crop"
+  },
+
+  "searchCrop": "Search Crop",
+  "@searchCrop": {
+    "description": "Hint text for the crop search field"
+  },
+
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Button text used to close the crop selection"
+  },
+
+  "getRecommendation": "Get Recommendation",
+  "@getRecommendation": {
+    "description": "Button text used to request a crop recommendation"
+  },
+
+  "howIsYourFieldSoil": "How is your field soil?",
+  "@howIsYourFieldSoil": {
+    "description": "Question asking the user about the current soil condition of their field"
+  },
+
+  "dry": "Dry",
+  "@dry": {
+    "description": "Soil condition indicating low moisture"
+  },
+
+  "needsIrrigation": "Needs irrigation",
+  "@needsIrrigation": {
+    "description": "Description for dry soil"
+  },
+
+  "normal": "Normal",
+  "@normal": {
+    "description": "Soil condition indicating balanced moisture"
+  },
+
+  "balanced": "Balanced",
+  "@balanced": {
+    "description": "Description for normal soil"
+  },
+
+  "wet": "Wet",
+  "@wet": {
+    "description": "Soil condition indicating high moisture"
+  },
+
+  "highMoisture": "High moisture",
+  "@highMoisture": {
+    "description": "Description for wet soil"
+  },
+
+  "weatherNotAvailable": "Weather not available",
+  "@weatherNotAvailable": {
+    "description": "Message shown when weather data is unavailable"
+  },
+
+  "today": "Today",
+  "@today": {
+    "description": "Label shown for the current day in the weather forecast"
+  },
+
+  "mon": "Mon",
+  "@mon": {
+    "description": "Short name for Monday"
+  },
+
+  "tue": "Tue",
+  "@tue": {
+    "description": "Short name for Tuesday"
+  },
+
+  "wed": "Wed",
+  "@wed": {
+    "description": "Short name for Wednesday"
+  },
+
+  "thu": "Thu",
+  "@thu": {
+    "description": "Short name for Thursday"
+  },
+
+  "fri": "Fri",
+  "@fri": {
+    "description": "Short name for Friday"
+  },
+
+  "sat": "Sat",
+  "@sat": {
+    "description": "Short name for Saturday"
+  },
+
+  "sun": "Sun",
+  "@sun": {
+    "description": "Short name for Sunday"
+  },
+
+  "onboardingTitle": "Right crop, right time",
+  "@onboardingTitle": {
+    "description": "Tagline shown on onboarding screens"
+  },
+
+  "skip": "Skip",
+  "@skip": {
+    "description": "Button text to skip onboarding"
+  },
+
+  "next": "Next",
+  "@next": {
+    "description": "Button text to go to next onboarding page"
+  },
+
+  "login": "Login",
+  "@login": {
+    "description": "Login screen title / button text"
+  },
+
+  "email": "Email",
+  "@email": {
+    "description": "Email field label"
+  },
+
+  "password": "Password",
+  "@password": {
+    "description": "Password field label"
+  },
+
+  "home": "Home",
+  "@home": {
+    "description": "Home tab / navigation label"
+  },
+
+  "weather": "Weather",
+  "@weather": {
+    "description": "Weather section label"
+  },
   
-  "stageInitial": "Germination stage",
-  "stageDevelopment": "Development stage",
-  "stageMid": "Flowering stage",
-  "stageLate": "Maturity stage",
 
-  "headlineIrrigate": "Irrigate today",
-  "headlineNoIrrigate": "Do not irrigate today",
 
-  "subEnoughWater": "The soil has sufficient moisture.",
-  "subLightIrrigation": "Apply light irrigation frequently.",
-  "subLessIrrigation": "Apply less irrigation.",
-  "subMoreIrrigation": "Apply more irrigation.",
+  "cropSuggestion": "Crop suggestion",
+  "@cropSuggestion": {
+    "description": "Title of the crop recommendation screen's app bar"
+  },
 
-  "reasonEnoughWater": "The soil moisture is sufficient. Irrigation is not needed today.",
-  "reasonNoRain": "There has been very little rainfall, so the soil moisture has reduced.",
-  "reasonLowRain": "Rainfall has been low and the crop requires more water."
+  "preparingRecommendation": "Preparing your recommendation...",
+  "@preparingRecommendation": {
+    "description": "Loading message while crop recommendation is being generated"
+  },
+
+  "somethingWentWrong": "Something went wrong",
+  "@somethingWentWrong": {
+    "description": "Generic fallback error message"
+  },
+
+  "tryAgain": "Try again",
+  "@tryAgain": {
+    "description": "Button text to retry a failed action"
+  },
+
+  "otherGoodOptions": "Other good options",
+  "@otherGoodOptions": {
+    "description": "Heading for alternate crop suggestions list"
+  },
+
+  "soilDataEstimatedNote": "Soil data is estimated from your district average. Add your Soil Health Card for a more accurate recommendation.",
+  "@soilDataEstimatedNote": {
+    "description": "Note shown when soil data used is an estimate, not user-provided"
+  },
+
+ 
+
+  "weatherChangesDailyNote": "Weather changes daily — check again tomorrow for an updated pick.",
+  "@weatherChangesDailyNote": {
+    "description": "Note reminding user that recommendations refresh daily"
+  },
+
+  "todaysRecommendation": "Today's Recommendation",
+  "@todaysRecommendation": {
+    "description": "Title suffix on irrigation output screen, shown after crop name"
+  },
+
+  "why": "Why?",
+  "@why": {
+    "description": "Heading for the reasoning box on irrigation output screen"
+  },
+
+  "cropGrowthStage": "Crop Growth Stage",
+  "@cropGrowthStage": {
+    "description": "Label for the crop's current growth stage"
+  },
+
+  "moreInfoTechnical": "More Information (Technical)",
+  "@moreInfoTechnical": {
+    "description": "Expandable section label showing technical irrigation numbers"
+  },
+
+  "etcLabel": "ETc (Today's Water Use)",
+  "@etcLabel": {
+    "description": "Technical label for crop evapotranspiration value"
+  },
+
+  "depletionLabel": "Root zone depletion (Dr)",
+  "@depletionLabel": {
+    "description": "Technical label for root zone water depletion value"
+  },
+
+  "rawLabel": "Readily Available Water (RAW)",
+  "@rawLabel": {
+    "description": "Technical label for readily available water value"
+  },
+
+  "tawLabel": "Total Available Water (TAW)",
+  "@tawLabel": {
+    "description": "Technical label for total available water value"
+  },
+
+ 
+
+  "myProfile": "My Profile",
+  "@myProfile": { "description": "Title of the profile screen" },
+
+  "fullName": "Full Name",
+  "@fullName": { "description": "Label for the full name field" },
+
+  "enterYourName": "Enter your name",
+  "@enterYourName": { "description": "Hint text for the name field" },
+
+  "nameRequired": "Name is required",
+  "@nameRequired": { "description": "Validation error when name is empty" },
+
+  "mobileNumber": "Mobile Number",
+  "@mobileNumber": { "description": "Label for the mobile number field" },
+
+  "tenDigitMobileNumber": "10 digit mobile number",
+  "@tenDigitMobileNumber": { "description": "Hint text for the mobile number field" },
+
+  "numberRequired": "Number is required",
+  "@numberRequired": { "description": "Validation error when mobile number is empty" },
+
+  "enterValidTenDigitNumber": "Enter a valid 10 digit number",
+  "@enterValidTenDigitNumber": { "description": "Validation error when mobile number length is wrong" },
+
+  "villageDistrict": "Village / District",
+  "@villageDistrict": { "description": "Label for the village/district field" },
+
+  "enterVillageOrDistrict": "Enter your village or district",
+  "@enterVillageOrDistrict": { "description": "Hint text for the village/district field" },
+
+  "fieldRequired": "This field is required",
+  "@fieldRequired": { "description": "Generic validation error for required fields" },
+
+  "state": "State",
+  "@state": { "description": "Label for the state field" },
+
+  "enterYourState": "Enter your state",
+  "@enterYourState": { "description": "Hint text for the state field" },
+
+  "saveProfile": "Save Profile",
+  "@saveProfile": { "description": "Button text to save profile" },
+
+  "profileSavedSuccess": "Profile saved successfully ✅",
+  "@profileSavedSuccess": { "description": "Snackbar message after successful profile save" },
+
+
+  "settings": "Settings",
+  "@settings": { "description": "Title of the settings screen" },
+
+  "notifications": "Notifications",
+  "@notifications": { "description": "Label for notification toggle" },
+
+  "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": { "description": "Settings tile label" },
+
+  "dataSecurity": "Data & Security",
+  "@dataSecurity": { "description": "Settings tile label" },
+
+  "aboutFasalGuru": "About FasalGuru",
+  "@aboutFasalGuru": { "description": "About us dialog title" },
+
+  "aboutFasalGuruDescription": "FasalGuru is a crop advisory app that gives farmers in Lucknow and Sitapur districts the right crop and irrigation advice based on soil, weather, and rainfall data.\n\nOur goal is to help farmers make better decisions through technology.\n\nVersion 1.0.0",
+  "@aboutFasalGuruDescription": { "description": "About us dialog body text" },
+
+  "close": "Close",
+  "@close": { "description": "Button to close a dialog" },
+
+  "deleteAccountTitle": "Delete Account?",
+  "@deleteAccountTitle": { "description": "Delete account confirmation dialog title" },
+
+  "deleteAccountConfirmMessage": "This action is permanent. Your profile data and account will both be deleted forever.",
+  "@deleteAccountConfirmMessage": { "description": "Delete account confirmation dialog body" },
+
+  "delete": "Delete",
+  "@delete": { "description": "Confirm delete button" },
+
+  "termsAndConditions": "Terms and Conditions",
+  "@termsAndConditions": { "description": "Settings tile label" },
+
+  "aboutUs": "About us",
+  "@aboutUs": { "description": "Settings tile label" },
+
+  "deleteAccount": "Delete Account",
+  "@deleteAccount": { "description": "Settings tile label" },
+
+  "logout": "Logout",
+  "@logout": { "description": "Logout button label" },
+
+ 
+
+  "welcomeBack": "Welcome Back",
+  "@welcomeBack": { "description": "Login screen heading" },
+
+  "loginToAccount": "Login to your account",
+  "@loginToAccount": { "description": "Login screen subheading" },
+
+  "pleaseEnterEmail": "Please enter your email",
+  "@pleaseEnterEmail": { "description": "Validation error when email field is empty" },
+
+  "pleaseEnterValidEmail": "Please enter a valid email",
+  "@pleaseEnterValidEmail": { "description": "Validation error when email format is invalid" },
+
+  "passwordEmpty": "Password is empty",
+  "@passwordEmpty": { "description": "Validation error when password field is empty" },
+
+  "passwordTooWeak": "Password too weak",
+  "@passwordTooWeak": { "description": "Validation error when password is too short" },
+
+  "rememberMe": "Remember me",
+  "@rememberMe": { "description": "Remember me checkbox label" },
+
+  "forgotPassword": "Forgot password?",
+  "@forgotPassword": { "description": "Forgot password link text" },
+
+  "loginFailed": "Login failed",
+  "@loginFailed": { "description": "Fallback error message when login fails" },
+
+  "dontHaveAccount": "Don't have an account? ",
+  "@dontHaveAccount": { "description": "Text before the sign up link" },
+
+ "signUp": "Sign Up",
+  "@signUp": { "description": "Sign up link text" },
+
+  "agreeToTermsError": "Please agree to the Terms and Privacy Policy",
+  "@agreeToTermsError": { "description": "Validation error when terms checkbox is not checked" },
+
+  "signUpFailed": "Sign up failed",
+  "@signUpFailed": { "description": "Fallback error message when sign up fails" },
+
+  "createAccount": "Create account",
+  "@createAccount": { "description": "Signup screen heading" },
+
+  "welcomeEnterDetails": "Welcome! Please enter your details",
+  "@welcomeEnterDetails": { "description": "Signup screen subheading" },
+
+  "username": "Username",
+  "@username": { "description": "Label/hint for username field" },
+
+  "pleaseEnterUsername": "Please enter a username",
+  "@pleaseEnterUsername": { "description": "Validation error when username is empty" },
+
+  "usernameMinLength": "Username must be at least 3 characters",
+  "@usernameMinLength": { "description": "Validation error when username is too short" },
+
+  "confirmPassword": "Confirm password",
+  "@confirmPassword": { "description": "Hint for confirm password field" },
+
+  "passwordsDoNotMatch": "Passwords do not match",
+  "@passwordsDoNotMatch": { "description": "Validation error when password and confirm password differ" },
+
+  "iAgreeWith": "I agree with",
+  "@iAgreeWith": { "description": "Text before the Terms link on signup" },
+
+  "terms": "Terms",
+  "@terms": { "description": "Terms link text" },
+
+  "and": "and",
+  "@and": { "description": "Connector word between Terms and Privacy Policy links" },
+
+ "alreadyHaveAccount": "Already have an account?",
+  "@alreadyHaveAccount": { "description": "Text before the login link on signup screen" },
+
+  "enterRegisteredEmail": "Enter your registered email and we'll send you a reset link",
+  "@enterRegisteredEmail": { "description": "Forgot password screen subheading" },
+
+  "emailAddress": "Email address",
+  "@emailAddress": { "description": "Hint text for email field on forgot password screen" },
+
+  "emailRequired": "Email is required",
+  "@emailRequired": { "description": "Validation error when email is empty" },
+
+  "enterValidEmailAddress": "Enter a valid email address",
+  "@enterValidEmailAddress": { "description": "Validation error when email format is invalid" },
+
+  "resetLinkSent": "Reset link has been sent to your email",
+  "@resetLinkSent": { "description": "Snackbar message after reset link is sent" },
+
+  "sendResetLink": "Send reset link",
+  "@sendResetLink": { "description": "Button text to send password reset link" },
+
+ "backToLogin": "Back to login",
+  "@backToLogin": { "description": "Link text to return to login screen" },
+
+  "stepOneOfThree": "STEP 1 OF 3",
+  "@stepOneOfThree": { "description": "Step indicator on district selection screen" },
+
+  "locationSectionLabel": "LOCATION",
+  "@locationSectionLabel": { "description": "Small section label above the district selection heading" },
+
+  "whereIsYourFarm": "Where's your farm?",
+  "@whereIsYourFarm": { "description": "District selection screen heading" },
+
+  "tailorAdviceDescription": "We'll use this to tailor crop and irrigation advice to your soil and weather.",
+  "@tailorAdviceDescription": { "description": "District selection screen subheading" },
+
+  "lucknow": "Lucknow",
+  "@lucknow": { "description": "District name" },
+
+  "lucknowSubtitle": "Wheat, paddy and mango belt",
+  "@lucknowSubtitle": { "description": "Short description of Lucknow district's main crops" },
+
+  "sitapur": "Sitapur",
+  "@sitapur": { "description": "District name" },
+
+  "sitapurSubtitle": "Sugarcane and wheat belt",
+  "@sitapurSubtitle": { "description": "Short description of Sitapur district's main crops" },
+
+  "continueButton": "Continue",
+  "@continueButton": { "description": "Continue button text" },
+  "navHome": "Home",
+  "@navHome": { "description": "Bottom nav bar label for home tab" },
+  "navCropAI": "Crop AI",
+  "@navCropAI": { "description": "Bottom nav bar label for crop recommendation tab" },
+  "navProfile": "Profile",
+  "@navProfile": { "description": "Bottom nav bar label for profile tab" },
+
+  "allowLocationAccess": "Allow Location Access",
+  "@allowLocationAccess": { "description": "Heading on location permission screen" },
+  "locationAccuracyReasonLine1": "We need your location for accurate",
+  "@locationAccuracyReasonLine1": { "description": "First line explaining why location is needed" },
+  "locationAccuracyReasonLine2": "weather & irrigation advice",
+  "@locationAccuracyReasonLine2": { "description": "Second line explaining why location is needed" },
+  "latitudeLabel": "Latitude : {value}",
+  "@latitudeLabel": {
+    "description": "Displays fetched latitude value",
+    "placeholders": { "value": { "type": "String" } }
+  },
+  "longitudeLabel": "Longitude : {value}",
+  "@longitudeLabel": {
+    "description": "Displays fetched longitude value",
+    "placeholders": { "value": { "type": "String" } }
+  },
+  "locationNotFetched": "Location not fetched",
+  "@locationNotFetched": { "description": "Shown when location has not been fetched yet" }
+ 
+
+
+
+
+
+
 
 }

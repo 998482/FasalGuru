@@ -1,8 +1,11 @@
+import 'package:fasalguru/l10n/app_localizations.dart';
+import 'package:fasalguru/local/location/location_prefs.dart';
 import 'package:fasalguru/navigation/routes.dart';
 import 'package:fasalguru/ui/Widgets/Custom_Button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:fasalguru/main.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -16,23 +19,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   static const int totalPages = 2;
 
-  List<Map<String, String>> get onboardingData => const [
+  // NOTE: ab const nahi hai kyunki l10n (BuildContext) chahiye title ke liye.
+  List<Map<String, String>> _onboardingData(AppLocalizations l10n) => [
         {
           "image": "assets/images/OnboardingScreen1.0-removebg-preview.png",
-          "title": "Right crop, right time",
+          "title": l10n.onboardingTitle,
         },
         {
           "image": "assets/images/OnboardingScreen6-removebg-preview.png",
-          "title": "Right crop, right time",
+          "title": l10n.onboardingTitle,
         },
       ];
 
-  void _handleNext() {
+  void _handleNext() async {
     final currentPage = controller.page?.round() ?? 0;
 
     if (currentPage == totalPages - 1) {
-      // last page -> navigate, don't try to animate further
-      context.push(Approutes.location);
+      await LocationPrefs.setOnboardingDone();
+      startupState.setOnboardingDone(true); // <-- ADD THIS LINE
+      if (!mounted) return;
+      context.go(Approutes.login); // push -> go
       return;
     }
 
@@ -51,6 +57,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).colorScheme.primary;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       body: SafeArea(
@@ -61,7 +68,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               height: 350,
               child: PageView(
                 controller: controller,
-                children: onboardingData.map((data) {
+                children: _onboardingData(l10n).map((data) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -107,9 +114,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TextButton(
-              onPressed: () => context.push(Approutes.location),
+              onPressed: () async {
+                await LocationPrefs.setOnboardingDone();
+                startupState.setOnboardingDone(true); // <-- ADD THIS LINE
+                if (!mounted) return;
+                context.go(Approutes.login); // push -> go
+              },
               child: Text(
-                "Skip",
+                l10n.skip,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: primaryColor,
                       fontSize: 20,
@@ -120,7 +132,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Custom_Button(
               height: 60,
               width: 120,
-              text: "Next",
+              text: l10n.next,
               color: primaryColor,
               onPressed: _handleNext,
             ),

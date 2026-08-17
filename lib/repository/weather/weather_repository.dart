@@ -45,8 +45,7 @@ class WeatherRepository {
       await _weatherDao.deleteCurrentWeather();
 
       // Model -> Entity
-      final List<WeatherEntity> weatherList =
-          weather.daily.map((day) {
+      final List<WeatherEntity> weatherList = weather.daily.map((day) {
         return WeatherEntity(
           date: day.date,
           tempMax: day.tempMax,
@@ -56,6 +55,10 @@ class WeatherRepository {
           precipitationProbability: day.precipitationProbability,
           windSpeed: day.windSpeed,
           et0: day.et0,
+          // FIX: yeh line missing thi — isi wajah se icon galat dikhta
+          // tha. Model tak weatherCode aa raha tha, lekin DB entity mein
+          // kabhi save hi nahi ho raha tha.
+          weatherCode: day.weatherCode,
           syncedAt: DateTime.now().toIso8601String(),
         );
       }).toList();

@@ -1,6 +1,10 @@
+/*import 'package:fasalguru/local/location/location_prefs.dart';
 import 'package:fasalguru/navigation/routes.dart';
+import 'package:fasalguru/viewModel/profile/ProfileViewModel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen1 extends StatefulWidget {
   @override
@@ -15,12 +19,25 @@ class _SplashScreen1 extends State<SplashScreen1> {
     super.initState();
     _navigate();
   }
+Future<void> _navigate() async {
+ 
 
-  Future<void> _navigate() async {
-    await Future.delayed(const Duration(seconds: 4));
+  final onboardingDone = await LocationPrefs.isOnboardingDone();
+  final currentUser = FirebaseAuth.instance.currentUser;
+
+  if (!mounted) return;
+
+  if (!onboardingDone) {
     context.go(Approutes.onboarding);
+  } else if (currentUser == null) {
+    context.go(Approutes.login); // onboarding dekh chuka, but logged in nahi
+  } else {
+    final profileVM = Provider.of<ProfileViewmodel>(context, listen: false);
+    final hasDistrict = await profileVM.hasDistrictSaved();
+    if (!mounted) return;
+    context.go(hasDistrict ? Approutes.home : Approutes.district);
   }
-
+}
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -50,4 +67,4 @@ class _SplashScreen1 extends State<SplashScreen1> {
       ),
     );
   }
-}
+}*/

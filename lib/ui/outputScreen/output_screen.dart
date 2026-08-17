@@ -1,13 +1,15 @@
-
-
+import 'package:fasalguru/l10n/app_localizations.dart';
+import 'package:fasalguru/ui/Widgets/customBackButton.dart';
+import 'package:fasalguru/ui/bottomNavigation/bottomNavigation.dart';
+import 'package:fasalguru/ui/home/widgets/homeheader/fasalGuruAppbar.dart';
 import 'package:fasalguru/viewModel/irrigation/irrigation_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-
 
 class OutputScreen extends StatefulWidget {
   final String cropDropdownValue; // 'gehun'
-  final String soilCardValue;     // 'aam_mitti'
+  final String soilCardValue; // 'aam_mitti'
   final DateTime sowingDate;
 
   const OutputScreen({
@@ -24,18 +26,18 @@ class OutputScreen extends StatefulWidget {
 class _OutputScreenState extends State<OutputScreen> {
   bool showTechnical = false;
 
- @override
-void initState() {
-  super.initState();
+  @override
+  void initState() {
+    super.initState();
 
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    context.read<IrrigationViewModel>().loadRecommendation(
-      cropDropdownValue: widget.cropDropdownValue,
-      soilCardValue: widget.soilCardValue,
-      sowingDate: widget.sowingDate,
-    );
-  });
-}
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<IrrigationViewModel>().loadRecommendation(
+            cropDropdownValue: widget.cropDropdownValue,
+            soilCardValue: widget.soilCardValue,
+            sowingDate: widget.sowingDate,
+          );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +45,17 @@ void initState() {
     const darkGreen = Color(0xFF1F3D2B);
     const goldText = Color(0xFFC98A2E);
 
+    final l10n = AppLocalizations.of(context)!;
+    final isHindi = Localizations.localeOf(context).languageCode == 'hi';
+
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
+        leading: CustomBackbutton(
+          pressed: () => context.pop(),
+        ),
         backgroundColor: darkGreen,
-        foregroundColor: Colors.white,
-        title: Text('${widget.cropDropdownValue} — Aaj ki salah'),
+        title: Text('${widget.cropDropdownValue} — ${l10n.todaysRecommendation}'),
       ),
       body: Consumer<IrrigationViewModel>(
         builder: (context, vm, _) {
@@ -67,7 +74,7 @@ void initState() {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  result.headlineHindi,
+                  isHindi ? result.headlineHindi : result.headlineEnglish,
                   style: const TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.bold,
@@ -76,12 +83,12 @@ void initState() {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  result.subTextHindi,
+                  isHindi ? result.subTextHindi : result.subTextEnglish,
                   style: const TextStyle(fontSize: 16, color: Colors.black87),
                 ),
                 const SizedBox(height: 20),
 
-                // "Kyun?" box - dark green
+                // "Kyun?" / "Why?" box - dark green
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(16),
@@ -92,13 +99,13 @@ void initState() {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Kyun?',
-                        style: TextStyle(color: goldText, fontWeight: FontWeight.bold),
+                      Text(
+                        l10n.why,
+                        style: const TextStyle(color: goldText, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        result.reasonHindi,
+                        isHindi ? result.reasonHindi : result.reasonEnglish,
                         style: const TextStyle(color: Colors.white, fontSize: 15),
                       ),
                     ],
@@ -117,11 +124,13 @@ void initState() {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Fasal ki stage',
-                          style: TextStyle(color: Colors.black54, fontSize: 13)),
+                      Text(
+                        l10n.cropGrowthStage,
+                        style: const TextStyle(color: Colors.black54, fontSize: 13),
+                      ),
                       const SizedBox(height: 4),
                       Text(
-                        result.stageNameHindi,
+                        isHindi ? result.stageNameHindi : result.stageNameEnglish,
                         style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w600),
                       ),
@@ -137,9 +146,9 @@ void initState() {
                     children: [
                       Icon(showTechnical ? Icons.expand_less : Icons.chevron_right,
                           size: 18, color: darkGreen),
-                      const Text(
-                        'Zyada jaankari (technical)',
-                        style: TextStyle(color: Colors.black54),
+                      Text(
+                        l10n.moreInfoTechnical,
+                        style: const TextStyle(color: Colors.black54),
                       ),
                     ],
                   ),
@@ -150,10 +159,10 @@ void initState() {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _techRow('ETc (aaj ka paani use)', '${result.etcMm.toStringAsFixed(1)} mm'),
-                        _techRow('Root zone depletion (Dr)', '${result.depletionMm.toStringAsFixed(1)} mm'),
-                        _techRow('Readily Available Water (RAW)', '${result.rawMm.toStringAsFixed(1)} mm'),
-                        _techRow('Total Available Water (TAW)', '${result.tawMm.toStringAsFixed(1)} mm'),
+                        _techRow(l10n.etcLabel, '${result.etcMm.toStringAsFixed(1)} mm'),
+                        _techRow(l10n.depletionLabel, '${result.depletionMm.toStringAsFixed(1)} mm'),
+                        _techRow(l10n.rawLabel, '${result.rawMm.toStringAsFixed(1)} mm'),
+                        _techRow(l10n.tawLabel, '${result.tawMm.toStringAsFixed(1)} mm'),
                       ],
                     ),
                   ),
