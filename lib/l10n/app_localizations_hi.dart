@@ -389,4 +389,55 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get locationNotFetched => 'स्थान प्राप्त नहीं हुआ';
+
+  @override
+  String get languageWelcome => 'नमस्ते!';
+
+  @override
+  String get selectLanguagePrompt => 'अपनी भाषा चुनें';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get languageEnglishSubtitle => 'अंग्रेजी में खेती की जानकारी';
+
+  @override
+  String get languageHindi => 'हिंदी';
+
+  @override
+  String get languageHindiSubtitle => 'अपनी भाषा में खेती की जानकारी';
+
+  @override
+  String get languageSettingsLabel => 'भाषा / Language';
+
+  @override
+  String get termsPrefix => 'मैंने ';
+
+  @override
+  String get termsOfUse => 'उपयोग की शर्तें';
+
+  @override
+  String get termsAnd => ' और ';
+
+  @override
+  String get privacyPolicyLink => 'गोपनीयता नीति';
+
+  @override
+  String get cropWheat => 'गेहूं';
+
+  @override
+  String get cropMaize => 'मक्का';
+
+  @override
+  String get cropChickpea => 'चना';
+
+  @override
+  String get cropPotato => 'आलू';
+
+  @override
+  String get cropTomato => 'टमाटर';
+
+  @override
+  String get cropSugarcane => 'गन्ना';
 }

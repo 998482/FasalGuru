@@ -850,6 +850,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Location not fetched'**
   String get locationNotFetched;
+
+  /// Greeting shown on the language selection screen
+  ///
+  /// In en, this message translates to:
+  /// **'Namaste!'**
+  String get languageWelcome;
+
+  /// Subheading on the language selection screen
+  ///
+  /// In en, this message translates to:
+  /// **'Select your language'**
+  String get selectLanguagePrompt;
+
+  /// English language option label
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageEnglish;
+
+  /// Description under the English language option
+  ///
+  /// In en, this message translates to:
+  /// **'Farming advice in English'**
+  String get languageEnglishSubtitle;
+
+  /// Hindi language option label
+  ///
+  /// In en, this message translates to:
+  /// **'हिंदी'**
+  String get languageHindi;
+
+  /// Description under the Hindi language option
+  ///
+  /// In en, this message translates to:
+  /// **'अपनी भाषा में खेती की जानकारी'**
+  String get languageHindiSubtitle;
+
+  /// Settings screen tile label to change app language
+  ///
+  /// In en, this message translates to:
+  /// **'Language / भाषा'**
+  String get languageSettingsLabel;
+
+  /// Text before terms link on language screen
+  ///
+  /// In en, this message translates to:
+  /// **'I read and accept the '**
+  String get termsPrefix;
+
+  /// Terms of use link text
+  ///
+  /// In en, this message translates to:
+  /// **'terms of use'**
+  String get termsOfUse;
+
+  /// Connector between terms and privacy links
+  ///
+  /// In en, this message translates to:
+  /// **' and the '**
+  String get termsAnd;
+
+  /// Privacy policy link text on language screen
+  ///
+  /// In en, this message translates to:
+  /// **'privacy policy'**
+  String get privacyPolicyLink;
+
+  /// Crop name: wheat
+  ///
+  /// In en, this message translates to:
+  /// **'Wheat'**
+  String get cropWheat;
+
+  /// Crop name: maize
+  ///
+  /// In en, this message translates to:
+  /// **'Maize'**
+  String get cropMaize;
+
+  /// Crop name: chickpea
+  ///
+  /// In en, this message translates to:
+  /// **'Chickpea'**
+  String get cropChickpea;
+
+  /// Crop name: potato
+  ///
+  /// In en, this message translates to:
+  /// **'Potato'**
+  String get cropPotato;
+
+  /// Crop name: tomato
+  ///
+  /// In en, this message translates to:
+  /// **'Tomato'**
+  String get cropTomato;
+
+  /// Crop name: sugarcane
+  ///
+  /// In en, this message translates to:
+  /// **'Sugarcane'**
+  String get cropSugarcane;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -480,7 +480,58 @@
     "placeholders": { "value": { "type": "String" } }
   },
   "locationNotFetched": "Location not fetched",
-  "@locationNotFetched": { "description": "Shown when location has not been fetched yet" }
+  "@locationNotFetched": { "description": "Shown when location has not been fetched yet" },
+  "languageWelcome": "Namaste!",
+  "@languageWelcome": { "description": "Greeting shown on the language selection screen" },
+
+  "selectLanguagePrompt": "Select your language",
+  "@selectLanguagePrompt": { "description": "Subheading on the language selection screen" },
+
+  "languageEnglish": "English",
+  "@languageEnglish": { "description": "English language option label" },
+
+  "languageEnglishSubtitle": "Farming advice in English",
+  "@languageEnglishSubtitle": { "description": "Description under the English language option" },
+
+  "languageHindi": "हिंदी",
+  "@languageHindi": { "description": "Hindi language option label" },
+
+  "languageHindiSubtitle": "अपनी भाषा में खेती की जानकारी",
+  "@languageHindiSubtitle": { "description": "Description under the Hindi language option" },
+
+  "languageSettingsLabel": "Language / भाषा",
+  "@languageSettingsLabel": { "description": "Settings screen tile label to change app language" },
+   "termsPrefix": "I read and accept the ",
+  "@termsPrefix": { "description": "Text before terms link on language screen" },
+
+  "termsOfUse": "terms of use",
+  "@termsOfUse": { "description": "Terms of use link text" },
+
+  "termsAnd": " and the ",
+  "@termsAnd": { "description": "Connector between terms and privacy links" },
+
+  "privacyPolicyLink": "privacy policy",
+  "@privacyPolicyLink": { "description": "Privacy policy link text on language screen" },
+
+  "cropWheat": "Wheat",
+  "@cropWheat": { "description": "Crop name: wheat" },
+
+  "cropMaize": "Maize",
+  "@cropMaize": { "description": "Crop name: maize" },
+
+  "cropChickpea": "Chickpea",
+  "@cropChickpea": { "description": "Crop name: chickpea" },
+
+  "cropPotato": "Potato",
+  "@cropPotato": { "description": "Crop name: potato" },
+
+  "cropTomato": "Tomato",
+  "@cropTomato": { "description": "Crop name: tomato" },
+
+  "cropSugarcane": "Sugarcane",
+  "@cropSugarcane": { "description": "Crop name: sugarcane" }
+
+  
  
 
 

@@ -1,8 +1,8 @@
+import 'package:fasalguru/l10n/app_localizations.dart';
 import 'package:fasalguru/model/cropSelection/crop_model.dart';
 import 'package:fasalguru/viewModel/cropSelection/CropSelectionViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 
 import 'crop_tile_widget.dart';
 
@@ -54,6 +54,7 @@ class _CropBottomSheetState extends State<CropBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Consumer<CropSelectionViewModel>(
       builder: (context, vm, child) {
@@ -76,26 +77,20 @@ class _CropBottomSheetState extends State<CropBottomSheet> {
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-
               const SizedBox(height: 20),
-
               Text(
-                "Select Crop",
+                l10n.selectCrop,
                 style: theme.textTheme.titleLarge,
               ),
-
               const SizedBox(height: 20),
-
               TextField(
                 controller: _searchController,
-                decoration: const InputDecoration(
-                  hintText: "Search Crop",
-                  prefixIcon: Icon(Icons.search),
+                decoration: InputDecoration(
+                  hintText: l10n.searchCrop,
+                  prefixIcon: const Icon(Icons.search),
                 ),
               ),
-
               const SizedBox(height: 20),
-
               Expanded(
                 child: ListView.separated(
                   itemCount: filteredCrops.length,
@@ -114,14 +109,12 @@ class _CropBottomSheetState extends State<CropBottomSheet> {
                   },
                 ),
               ),
-
               const SizedBox(height: 10),
-
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text("Cancel"),
+                  child: Text(l10n.cancel),
                 ),
               ),
             ],

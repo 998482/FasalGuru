@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SoilCardWidget extends StatelessWidget {
   final String title;
   final String subtitle;
-  final IconData icon;
+  final String imagePath;
   final bool isSelected;
   final VoidCallback onTap;
 
@@ -11,7 +11,7 @@ class SoilCardWidget extends StatelessWidget {
     super.key,
     required this.title,
     required this.subtitle,
-    required this.icon,
+    required this.imagePath,
     required this.isSelected,
     required this.onTap,
   });
@@ -40,15 +40,21 @@ class SoilCardWidget extends StatelessWidget {
         ),
         child: Column(
           children: [
-          CircleAvatar(
-  radius: 28,
-  backgroundColor: theme.colorScheme.primary,
-  child: Icon(
-    icon,
-    size: 30,
-    color: Colors.white,
-  ),
-),
+            ClipOval(
+              child: Container(
+                width: 56,
+                height: 56,
+                color: isSelected
+                    ? theme.colorScheme.primary.withOpacity(.12)
+                    : Colors.grey.shade100,
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.cover,
+                  width: 56,
+                  height: 56,
+                ),
+              ),
+            ),
 
             const SizedBox(height: 14),
 

@@ -6,6 +6,7 @@ import 'package:fasalguru/services/firebase/firebaseService.dart';
 import 'package:fasalguru/ui/Widgets/customBackButton.dart';
 import 'package:fasalguru/ui/home/widgets/homeheader/fasalGuruAppbar.dart';
 import 'package:fasalguru/viewModel/AuthenticationViewModel/authViewModel.dart';
+import 'package:fasalguru/viewModel/locale/LocaleViewModel.dart';
 import 'package:fasalguru/viewModel/profile/ProfileViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -47,10 +48,15 @@ class _SettingScreenState extends State<SettingScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _ProfileRow(
-                imagePath: profileView.imagePath,
-                name: profileView.profile?.username ?? l10n.fullName,
-              ),
+              // ---------------- Profile Row (commented out) ----------------
+              // _ProfileRow(
+              //   imagePath: profileView.imagePath,
+              //   name: profileView.profile?.username ?? l10n.fullName,
+              // ),
+              // const SizedBox(height: 32),
+
+              const _AppLogoHeader(),
+
               const SizedBox(height: 32),
               _PreferencesCard(
                 notificationEnabled: notification,
@@ -77,79 +83,112 @@ Future<void> _openUrl(String url) async {
   }
 }
 
-// ---------------- Profile Row ----------------
+// ---------------- App Logo Header (centered logo + app name) ----------------
 
-class _ProfileRow extends StatelessWidget {
-  final String? imagePath;
-  final String name;
-
-  const _ProfileRow({required this.imagePath, required this.name});
+class _AppLogoHeader extends StatelessWidget {
+  const _AppLogoHeader();
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        GestureDetector(
-          onTap: () => _showFullImage(context),
-          child: Container(
-            width: 68,
-            height: 68,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: scheme.tertiary, width: 2),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(2),
-              child: ClipOval(
-                child: imagePath != null
-                    ? Image.file(File(imagePath!), fit: BoxFit.cover)
-                    : Container(
-                        color: scheme.secondary.withOpacity(0.15),
-                        child: Icon(
-                          Icons.person,
-                          size: 34,
-                          color: scheme.primary,
-                        ),
-                      ),
-              ),
-            ),
-          ),
+        Image.asset(
+          "assets/images/AppLogo.png", // ⚠️ apna actual logo path daal do
+          width: 90,
+          height: 90,
+          fit: BoxFit.contain,
         ),
-        const SizedBox(width: 14),
-        Expanded(
-          child: Text(
-            name,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: scheme.onSurface,
-                ),
-          ),
+        const SizedBox(height: 12),
+        Text(
+          "FasalGuru", // ⚠️ agar l10n mein app name hai to l10n.appName use kar lena
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: scheme.onSurface,
+              ),
         ),
       ],
     );
   }
-
-  void _showFullImage(BuildContext context) {
-    if (imagePath == null) return;
-    showDialog(
-      context: context,
-      builder: (_) => Dialog(
-        backgroundColor: Colors.transparent,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: Image.file(File(imagePath!), fit: BoxFit.cover),
-        ),
-      ),
-    );
-  }
 }
 
-// ---------------- Preferences Card (Notifications + Policy links) ----------------
+// ---------------- Profile Row (kept for reference, currently unused) ----------------
+
+// class _ProfileRow extends StatelessWidget {
+//   final String? imagePath;
+//   final String name;
+//
+//   const _ProfileRow({required this.imagePath, required this.name});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final scheme = Theme.of(context).colorScheme;
+//
+//     return Row(
+//       mainAxisAlignment: MainAxisAlignment.start,
+//       children: [
+//         GestureDetector(
+//           onTap: () => _showFullImage(context),
+//           child: Container(
+//             width: 68,
+//             height: 68,
+//             decoration: BoxDecoration(
+//               shape: BoxShape.circle,
+//               border: Border.all(color: scheme.tertiary, width: 2),
+//             ),
+//             child: Padding(
+//               padding: const EdgeInsets.all(2),
+//               child: ClipOval(
+//                 child: imagePath != null
+//                     ? Image.file(File(imagePath!), fit: BoxFit.cover)
+//                     : Container(
+//                         color: scheme.secondary.withOpacity(0.15),
+//                         child: Icon(
+//                           Icons.person,
+//                           size: 34,
+//                           color: scheme.primary,
+//                         ),
+//                       ),
+//               ),
+//             ),
+//           ),
+//         ),
+//         const SizedBox(width: 14),
+//         Expanded(
+//           child: Text(
+//             name,
+//             overflow: TextOverflow.ellipsis,
+//             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+//                   fontSize: 20,
+//                   fontWeight: FontWeight.w600,
+//                   color: scheme.onSurface,
+//                 ),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+//
+//   void _showFullImage(BuildContext context) {
+//     if (imagePath == null) return;
+//     showDialog(
+//       context: context,
+//       builder: (_) => Dialog(
+//         backgroundColor: Colors.transparent,
+//         child: ClipRRect(
+//           borderRadius: BorderRadius.circular(16),
+//           child: Image.file(File(imagePath!), fit: BoxFit.cover),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// ---------------- Preferences Card (Notifications + Language + Policy) ----------------
 
 class _PreferencesCard extends StatelessWidget {
   final bool notificationEnabled;
@@ -167,6 +206,7 @@ class _PreferencesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context)!;
+    final localeVM = context.watch<LocaleViewModel>();
 
     return _SettingsCard(
       children: [
@@ -196,14 +236,15 @@ class _PreferencesCard extends StatelessWidget {
         ),
         const _CardDivider(),
         _SettingsTile(
-          icon: Icons.privacy_tip_outlined,
-          label: l10n.privacyPolicy,
-          onTap: () => _openUrl(_privacyPolicyUrl),
+          icon: Icons.language_rounded,
+          label: l10n.languageSettingsLabel,
+          trailingText: localeVM.isHindi ? l10n.languageHindi : l10n.languageEnglish,
+          onTap: () => context.push(Approutes.language, extra: true),
         ),
         const _CardDivider(),
         _SettingsTile(
-          icon: Icons.lock_outline,
-          label: l10n.dataSecurity,
+          icon: Icons.privacy_tip_outlined,
+          label: l10n.privacyPolicy,
           onTap: () => _openUrl(_privacyPolicyUrl),
         ),
       ],
@@ -354,6 +395,7 @@ class _SettingsTile extends StatelessWidget {
   final IconData icon;
   final String label;
   final bool isDanger;
+  final String? trailingText;
   final VoidCallback onTap;
 
   const _SettingsTile({
@@ -361,6 +403,7 @@ class _SettingsTile extends StatelessWidget {
     required this.label,
     required this.onTap,
     this.isDanger = false,
+    this.trailingText,
   });
 
   @override
@@ -385,6 +428,17 @@ class _SettingsTile extends StatelessWidget {
               ),
             ),
           ),
+          if (trailingText != null) ...[
+            Text(
+              trailingText!,
+              style: TextStyle(
+                fontSize: 14,
+                color: scheme.onSurface.withOpacity(0.5),
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(width: 6),
+          ],
           Icon(
             Icons.chevron_right_rounded,
             color: scheme.onSurface.withOpacity(0.4),

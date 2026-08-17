@@ -12,4 +12,5 @@ class Approutes {
   static final forgotPassword = "/ForgotPasswordScreen";
   static final croprecommendation = "/CropRecommendationScreen";
   static final district = "/district";
+  static const  language = '/language';
 }

@@ -1,6 +1,7 @@
 import 'package:fasalguru/firebase_options.dart';
 import 'package:fasalguru/l10n/app_localizations.dart';
 import 'package:fasalguru/local/irrigation_local.dart';
+import 'package:fasalguru/local/language/language_prefs.dart';
 import 'package:fasalguru/local/location/location_prefs.dart';
 import 'package:fasalguru/local/weather_database.dart';
 import 'package:fasalguru/repository/irrigation/irrigation_repository.dart';
@@ -29,28 +30,31 @@ import 'package:fasalguru/viewModel/weather/weather_viewmodel.dart';
 /// Filled once in main() before runApp(), read by GoRouter's redirect.
 ///
 /// IMPORTANT: extends ChangeNotifier now. GoRouter's `refreshListenable`
-/// listens to this object -- jab bhi login / district / onboarding state
-/// change ho (e.g. login screen se login success, ya district select hone
-/// ke baad), us jagah se `startupState.updateXxx()` call karo. Wo
-/// `notifyListeners()` fire karega aur GoRouter apna `redirect` callback
-/// dobara FRESH values ke saath re-evaluate karega. Isse "too many
-/// redirects" / stuck-on-district-screen wala loop fix hota hai.
+/// listens to this object -- jab bhi login / district / onboarding /
+/// language state change ho, us jagah se `startupState.updateXxx()` call
+/// karo. Wo `notifyListeners()` fire karega aur GoRouter apna `redirect`
+/// callback dobara FRESH values ke saath re-evaluate karega. Isse
+/// "too many redirects" / stuck-on-screen wala loop fix hota hai.
 class AppStartupState extends ChangeNotifier {
   bool _onboardingDone;
   bool _isLoggedIn;
   bool _hasDistrict;
+  bool _hasSelectedLanguage;
 
   AppStartupState({
     required bool onboardingDone,
     required bool isLoggedIn,
     required bool hasDistrict,
+    required bool hasSelectedLanguage,
   })  : _onboardingDone = onboardingDone,
         _isLoggedIn = isLoggedIn,
-        _hasDistrict = hasDistrict;
+        _hasDistrict = hasDistrict,
+        _hasSelectedLanguage = hasSelectedLanguage;
 
   bool get onboardingDone => _onboardingDone;
   bool get isLoggedIn => _isLoggedIn;
   bool get hasDistrict => _hasDistrict;
+  bool get hasSelectedLanguage => _hasSelectedLanguage;
 
   void setOnboardingDone(bool value) {
     if (_onboardingDone == value) return;
@@ -67,6 +71,12 @@ class AppStartupState extends ChangeNotifier {
   void setHasDistrict(bool value) {
     if (_hasDistrict == value) return;
     _hasDistrict = value;
+    notifyListeners();
+  }
+
+  void setHasSelectedLanguage(bool value) {
+    if (_hasSelectedLanguage == value) return;
+    _hasSelectedLanguage = value;
     notifyListeners();
   }
 }
@@ -86,6 +96,7 @@ Future<void> main() async {
 
   // ---- Minimum local checks needed to decide the first screen ----
   // No Firestore, no weather, no ML here — just local prefs + cached auth.
+  final hasSelectedLanguage = await LanguagePrefs.isLanguageSelected();
   final onboardingDone = await LocationPrefs.isOnboardingDone();
   final currentUser = FirebaseAuth.instance.currentUser;
   final hasDistrict = currentUser == null
@@ -96,6 +107,7 @@ Future<void> main() async {
     onboardingDone: onboardingDone,
     isLoggedIn: currentUser != null,
     hasDistrict: hasDistrict,
+    hasSelectedLanguage: hasSelectedLanguage,
   );
 
   // ---- Existing DB / repository setup — unchanged ----
@@ -156,6 +168,25 @@ class MyApp extends StatelessWidget {
       locale: localeViewModel.locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      // Crop names ko l10n chahiye, lekin CropSelectionViewModel app-start
+      // (MultiProvider) mein banta hai jaha AppLocalizations abhi available
+      // nahi hota. Isliye har rebuild par (jo locale change hone par bhi
+      // hota hai, kyunki upar `locale: localeViewModel.locale` hai) yaha se
+      // ViewModel ko fresh l10n + language code de dete hain. Guard check
+      // ViewModel ke andar hai, isliye ye safe hai — normal app usage
+      // (scroll, tap, navigation) par extra kaam bilkul nahi hoga, sirf
+      // jab locale actually badle tab hi crop list refresh hogi.
+      builder: (context, child) {
+        final l10n = AppLocalizations.of(context)!;
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (!context.mounted) return;
+          context.read<CropSelectionViewModel>().updateLocale(
+                localeViewModel.locale.languageCode,
+                l10n,
+              );
+        });
+        return child!;
+      },
       theme: ThemeData(
         useMaterial3: true,
         textTheme: const TextTheme(

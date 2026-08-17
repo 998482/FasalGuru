@@ -62,7 +62,7 @@ class _SoilSelectionWidgetState extends State<SoilSelectionWidget> {
               child: SoilCardWidget(
                 title: l10n.dry,
                 subtitle: l10n.needsIrrigation,
-                icon: Icons.wb_sunny,
+                imagePath: "assets/images/drySoil.png",
                 isSelected: selected == SoilType.dry,
                 onTap: () => selectSoil(SoilType.dry),
               ),
@@ -74,7 +74,7 @@ class _SoilSelectionWidgetState extends State<SoilSelectionWidget> {
               child: SoilCardWidget(
                 title: l10n.normal,
                 subtitle: l10n.balanced,
-                icon: Icons.grass,
+                imagePath: "assets/images/normal.png",
                 isSelected: selected == SoilType.normal,
                 onTap: () => selectSoil(SoilType.normal),
               ),
@@ -86,7 +86,7 @@ class _SoilSelectionWidgetState extends State<SoilSelectionWidget> {
               child: SoilCardWidget(
                 title: l10n.wet,
                 subtitle: l10n.highMoisture,
-                icon: Icons.water_drop,
+                imagePath: "assets/images/wetSoil.png", // ⚠️ naam confirm kar lena
                 isSelected: selected == SoilType.wet,
                 onTap: () => selectSoil(SoilType.wet),
               ),

@@ -389,4 +389,55 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get locationNotFetched => 'Location not fetched';
+
+  @override
+  String get languageWelcome => 'Namaste!';
+
+  @override
+  String get selectLanguagePrompt => 'Select your language';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get languageEnglishSubtitle => 'Farming advice in English';
+
+  @override
+  String get languageHindi => 'हिंदी';
+
+  @override
+  String get languageHindiSubtitle => 'अपनी भाषा में खेती की जानकारी';
+
+  @override
+  String get languageSettingsLabel => 'Language / भाषा';
+
+  @override
+  String get termsPrefix => 'I read and accept the ';
+
+  @override
+  String get termsOfUse => 'terms of use';
+
+  @override
+  String get termsAnd => ' and the ';
+
+  @override
+  String get privacyPolicyLink => 'privacy policy';
+
+  @override
+  String get cropWheat => 'Wheat';
+
+  @override
+  String get cropMaize => 'Maize';
+
+  @override
+  String get cropChickpea => 'Chickpea';
+
+  @override
+  String get cropPotato => 'Potato';
+
+  @override
+  String get cropTomato => 'Tomato';
+
+  @override
+  String get cropSugarcane => 'Sugarcane';
 }
