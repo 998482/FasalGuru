@@ -40,6 +40,42 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:870279073160:android:2eadab4b02284d3450be3d",
+        "android_client_info": {
+          "package_name": "com.fasalguru.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "870279073160-q60kb35irbtaft7rbljg30grvk55g4k4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-euqsIO4-Ynj0eBOwag2XlukcnZ8hGGs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "870279073160-q60kb35irbtaft7rbljg30grvk55g4k4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "870279073160-h45g5hok7ugqm6lepnksr24bf57tk5in.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fasalguru"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

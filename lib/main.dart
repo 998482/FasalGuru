@@ -31,30 +31,35 @@ import 'package:fasalguru/viewModel/weather/weather_viewmodel.dart';
 ///
 /// IMPORTANT: extends ChangeNotifier now. GoRouter's `refreshListenable`
 /// listens to this object -- jab bhi login / district / onboarding /
-/// language state change ho, us jagah se `startupState.updateXxx()` call
-/// karo. Wo `notifyListeners()` fire karega aur GoRouter apna `redirect`
-/// callback dobara FRESH values ke saath re-evaluate karega. Isse
-/// "too many redirects" / stuck-on-screen wala loop fix hota hai.
+/// language / location state change ho, us jagah se
+/// `startupState.updateXxx()` call karo. Wo `notifyListeners()` fire
+/// karega aur GoRouter apna `redirect` callback dobara FRESH values ke
+/// saath re-evaluate karega. Isse "too many redirects" / stuck-on-screen
+/// wala loop fix hota hai.
 class AppStartupState extends ChangeNotifier {
   bool _onboardingDone;
   bool _isLoggedIn;
   bool _hasDistrict;
   bool _hasSelectedLanguage;
+  bool _locationStepDone;
 
   AppStartupState({
     required bool onboardingDone,
     required bool isLoggedIn,
     required bool hasDistrict,
     required bool hasSelectedLanguage,
+    required bool locationStepDone,
   })  : _onboardingDone = onboardingDone,
         _isLoggedIn = isLoggedIn,
         _hasDistrict = hasDistrict,
-        _hasSelectedLanguage = hasSelectedLanguage;
+        _hasSelectedLanguage = hasSelectedLanguage,
+        _locationStepDone = locationStepDone;
 
   bool get onboardingDone => _onboardingDone;
   bool get isLoggedIn => _isLoggedIn;
   bool get hasDistrict => _hasDistrict;
   bool get hasSelectedLanguage => _hasSelectedLanguage;
+  bool get locationStepDone => _locationStepDone;
 
   void setOnboardingDone(bool value) {
     if (_onboardingDone == value) return;
@@ -77,6 +82,12 @@ class AppStartupState extends ChangeNotifier {
   void setHasSelectedLanguage(bool value) {
     if (_hasSelectedLanguage == value) return;
     _hasSelectedLanguage = value;
+    notifyListeners();
+  }
+
+  void setLocationStepDone(bool value) {
+    if (_locationStepDone == value) return;
+    _locationStepDone = value;
     notifyListeners();
   }
 }
@@ -103,11 +114,17 @@ Future<void> main() async {
       ? false
       : await LocationPrefs.getDistrict() != null;
 
+  // Jiska district already set hai (returning user), usko location
+  // screen dobara nahi dikhana — seedha home. Naya/existing-without-district
+  // user pehle location screen dekhega.
+  final locationStepDone = hasDistrict;
+
   startupState = AppStartupState(
     onboardingDone: onboardingDone,
     isLoggedIn: currentUser != null,
     hasDistrict: hasDistrict,
     hasSelectedLanguage: hasSelectedLanguage,
+    locationStepDone: locationStepDone,
   );
 
   // ---- Existing DB / repository setup — unchanged ----

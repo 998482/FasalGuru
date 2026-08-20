@@ -28,12 +28,12 @@ final Set<String> _redirectExemptPaths = {
 /// parameter ke through startupState milta hai).
 ///
 /// refreshListenable: startupState -- IMPORTANT. AppStartupState ab
-/// ChangeNotifier hai. Jab bhi login/district/onboarding/language complete
-/// hoke startupState update hota hai (notifyListeners), GoRouter redirect
-/// dobara evaluate karega with FRESH values -- isse "too many redirects"
-/// / stuck-on-screen wala loop fix ho jaata hai.
+/// ChangeNotifier hai. Jab bhi login/district/onboarding/language/location
+/// complete hoke startupState update hota hai (notifyListeners), GoRouter
+/// redirect dobara evaluate karega with FRESH values -- isse "too many
+/// redirects" / stuck-on-screen wala loop fix ho jaata hai.
 GoRouter createRouter(AppStartupState startupState) {
-  
+
   return GoRouter(
     initialLocation: Approutes.language,
     refreshListenable: startupState,
@@ -58,18 +58,26 @@ GoRouter createRouter(AppStartupState startupState) {
         return goingTo == Approutes.login ? null : Approutes.login;
       }
 
-      // 3) Login hai but district select nahi hai -> district pe bhejo
+      // 3) Login hai, district set nahi, aur location step abhi complete
+      //    nahi hua -> location screen pe bhejo
+      if (!startupState.hasDistrict && !startupState.locationStepDone) {
+        return goingTo == Approutes.location ? null : Approutes.location;
+      }
+
+      // 4) Location step ho gaya (skip ya allow) but district abhi bhi
+      //    set nahi hai (skip hua tha) -> district pe bhejo
       if (!startupState.hasDistrict) {
         return goingTo == Approutes.district ? null : Approutes.district;
       }
 
-      // 4) Sab set hai -> language/onboarding/login/district pe wapas
-      //    mat jaane do (Settings se language screen access karna is
+      // 5) Sab set hai -> language/onboarding/login/location/district pe
+      //    wapas mat jaane do (Settings se language screen access karna is
       //    check se exempt hai, kyunki wo context.push use karta hai
       //    aur waha se seedha pop() ho jaata hai — GoRouter redirect
       //    tab bhi trigger hoga, isliye language ko yaha se hata do)
       if (goingTo == Approutes.onboarding ||
           goingTo == Approutes.login ||
+          goingTo == Approutes.location ||
           goingTo == Approutes.district) {
         return Approutes.home;
       }

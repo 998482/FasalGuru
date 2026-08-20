@@ -61,6 +61,7 @@ dependencies:
   shared_preferences: ^2.5.5
   flutter_native_splash: ^2.4.8
   url_launcher: ^6.3.2
+  flutter_launcher_icons: ^0.14.4
   
  
 
@@ -145,3 +146,7 @@ flutter_native_splash:
   android_12:
     color: "#1D4D38"
     image: assets/images/AppLogo.png
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/AppLogo.png"

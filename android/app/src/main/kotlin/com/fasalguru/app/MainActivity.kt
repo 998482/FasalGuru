@@ -1,4 +1,4 @@
-package com.example.fasalguru
+package com.fasalguru.app
 
 import io.flutter.embedding.android.FlutterActivity
 
