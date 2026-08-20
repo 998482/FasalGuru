@@ -48,6 +48,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
+  Future<void> _skip() async {
+    await LocationPrefs.setOnboardingDone();
+    startupState.setOnboardingDone(true);
+    if (!mounted) return;
+    context.go(Approutes.login);
+  }
+
   @override
   void dispose() {
     controller.dispose();
@@ -58,6 +65,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).colorScheme.primary;
     final l10n = AppLocalizations.of(context)!;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    // Available height ke hisaab se onboarding area ka height decide karo,
+    // taaki chhote/bade screen aur alag-alag language text length dono
+    // ke saath overflow na ho.
+    final pageAreaHeight = (screenHeight * 0.45).clamp(280.0, 400.0);
 
     return Scaffold(
       body: SafeArea(
@@ -65,29 +78,51 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: 350,
+              height: pageAreaHeight,
               child: PageView(
                 controller: controller,
                 children: _onboardingData(l10n).map((data) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Transform.translate(
-                        offset: const Offset(0, -15), // image thoda upar
-                        child: Image.asset(
-                          data["image"]!,
-                          width: 300,
+                      // ---- Image: flexible space, kabhi overflow nahi hoga
+                      Flexible(
+                        flex: 3,
+                        child: Transform.translate(
+                          offset: const Offset(0, -15),
+                          child: Image.asset(
+                            data["image"]!,
+                            width: 300,
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 12),
-                      Text(
-                        data["title"]!,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              color: primaryColor,
-                              fontSize: 25,
-                              fontWeight: FontWeight.w700,
+                      // ---- Title: FittedBox se auto-shrink hoga agar
+                      // Hindi text lamba ho jaaye, kabhi bhi pixel overflow
+                      // nahi dikhega.
+                      Flexible(
+                        flex: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              data["title"]!,
+                              textAlign: TextAlign.center,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                    color: primaryColor,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                             ),
+                          ),
+                        ),
                       ),
                     ],
                   );
@@ -105,6 +140,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 dotColor: primaryColor,
               ),
             ),
+            // Bottom padding taaki floatingActionButton content ko cover na kare
+            const SizedBox(height: 90),
           ],
         ),
       ),
@@ -113,22 +150,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TextButton(
-              onPressed: () async {
-                await LocationPrefs.setOnboardingDone();
-                startupState.setOnboardingDone(true); // <-- ADD THIS LINE
-                if (!mounted) return;
-                context.go(Approutes.login); // push -> go
-              },
-              child: Text(
-                l10n.skip,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: primaryColor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
+            // ---- Skip button: Flexible taaki lambi Hindi wording bhi
+            // Custom_Button ke upar overflow na kare
+            Flexible(
+              child: TextButton(
+                onPressed: _skip,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    l10n.skip,
+                    maxLines: 1,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: primaryColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                ),
               ),
             ),
+            const SizedBox(width: 8),
             Custom_Button(
               height: 60,
               width: 120,
